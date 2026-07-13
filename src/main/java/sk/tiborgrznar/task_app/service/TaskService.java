@@ -1,0 +1,34 @@
+package sk.tiborgrznar.task_app.service;
+
+import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
+import sk.tiborgrznar.task_app.dto.TaskResponseDto;
+import sk.tiborgrznar.task_app.entity.Task;
+import sk.tiborgrznar.task_app.entity.User;
+import sk.tiborgrznar.task_app.exception.ResourceNotFoundException;
+import sk.tiborgrznar.task_app.repository.TaskRepository;
+import sk.tiborgrznar.task_app.repository.UserRepository;
+
+import java.util.List;
+
+@Service
+@AllArgsConstructor
+public class TaskService {
+
+    private final UserRepository userRepository;
+
+    private final TaskRepository taskRepository;
+
+    public List<TaskResponseDto> getAllForUser(String email) {
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found!"));
+
+        List<Task> tasks = taskRepository.findAllByUserId(user.getId());
+
+        return tasks.stream()
+                .map(TaskResponseDto::new)
+                .toList();
+
+    }
+}
