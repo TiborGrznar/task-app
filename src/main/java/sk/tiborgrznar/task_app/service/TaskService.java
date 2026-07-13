@@ -46,4 +46,20 @@ public class TaskService {
         return new TaskResponseDto(savedTask);
 
     }
+
+    public TaskResponseDto markDone(String email, Long taskId) {
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found!"));
+
+        Task task = taskRepository.findByIdAndUserId(taskId, user.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found!"));
+
+        task.setDone(true);
+
+        Task savedTask = taskRepository.save(task);
+
+        return new TaskResponseDto(savedTask);
+    }
+
 }
