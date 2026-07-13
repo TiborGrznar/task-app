@@ -2,6 +2,7 @@ package sk.tiborgrznar.task_app.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import sk.tiborgrznar.task_app.dto.TaskRequestDto;
 import sk.tiborgrznar.task_app.dto.TaskResponseDto;
 import sk.tiborgrznar.task_app.entity.Task;
 import sk.tiborgrznar.task_app.entity.User;
@@ -29,6 +30,20 @@ public class TaskService {
         return tasks.stream()
                 .map(TaskResponseDto::new)
                 .toList();
+    }
+
+    public TaskResponseDto create(String email, TaskRequestDto request) {
+
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found!"));
+
+        Task task = new Task();
+        task.setText(request.getText());
+        task.setUser(user);
+
+        Task savedTask = taskRepository.save(task);
+
+        return new TaskResponseDto(savedTask);
 
     }
 }
