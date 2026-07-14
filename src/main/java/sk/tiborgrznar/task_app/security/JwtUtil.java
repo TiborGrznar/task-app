@@ -11,6 +11,13 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.function.Function;
 
+
+/**
+ * Handles creation and validation of JWTs used for stateless authentication.
+ * Tokens carry the user's email as the subject and are signed with a secret
+ * key (jwt.secret) using HMAC-SHA. Used by AuthService (token generation on
+ * login) and JwtAuthFilter (token validation on every request).
+ */
 @Component
 public class JwtUtil {
 
