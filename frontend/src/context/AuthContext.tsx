@@ -1,18 +1,6 @@
-import { createContext, useState } from "react";
 import api from "../api/axios";
-
-interface AuthContextType {
-    token: string | null;
-    email: string | null;
-
-    login: (email: string, password: string) => Promise<void>;
-    register: (email: string, password: string, name: string) => Promise<void>;
-    logout: () => void;
-};
-
-
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
+import { useState } from "react";
+import { AuthContext } from "./AuthContextInstance";
 
 /**
  * Provides authentication state (token, email) and auth actions (login,
@@ -28,7 +16,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Authenticates against the backend and persists the token/email so the
     // user stays logged in across page reloads
     const login = async (email: string, password: string) => {
-        const res = await api.post("auth/login", { email, password });
+        const res = await api.post("/auth/login", { email, password });
 
         setToken(res.data.token);
         setEmail(res.data.email);
