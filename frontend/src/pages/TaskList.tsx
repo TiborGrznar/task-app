@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 import type { Task } from "../types/Task";
+import TaskItem from "../components/TaskItem";
 
 /**
  * Task list page. Loads the current user's tasks from the backend on mount
@@ -29,7 +30,7 @@ function TaskList() {
         <div>
             {error && <p>{error}</p>}
             {tasks.map((task) => (
-                <div key={task.id}>{task.text}</div>
+                <TaskItem key={task.id} task={task} />
             ))}
         </div>
     );
