@@ -26,11 +26,18 @@ function TaskList() {
         loadData();
     }, []);  // empty dependency array -> runs once, on mount
 
+    
+    // Passed to TaskItem as the onDelete prop. Called after the task has
+    // already been deleted on the backend, to remove it from local state too.
+    function removeTaskFromList(taskId: number) {
+        setTasks(tasks.filter((task) => task.id !== taskId));
+    }
+
     return (
         <div>
             {error && <p>{error}</p>}
             {tasks.map((task) => (
-                <TaskItem key={task.id} task={task} />
+                <TaskItem key={task.id} task={task} onDelete={removeTaskFromList} />
             ))}
         </div>
     );
