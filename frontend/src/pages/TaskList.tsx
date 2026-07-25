@@ -26,18 +26,54 @@ function TaskList() {
         loadData();
     }, []);  // empty dependency array -> runs once, on mount
 
-    
+
     // Passed to TaskItem as the onDelete prop. Called after the task has
     // already been deleted on the backend, to remove it from local state too.
     function removeTaskFromList(taskId: number) {
         setTasks(tasks.filter((task) => task.id !== taskId));
     }
 
+
+    /**  Passed to TaskItem as the onMarkDone prop. Called after the task has
+    * already been marked done on the backend. Uses map (not filter) because
+    * the task stays in the list, only its `done` property changes.
+    * The spread operator (...task) copies the existing fields and overrides
+    * `done`, since React state must never be mutated directly.
+    */
+    function markTaskAsDone(taskId: number) {
+        setTasks(tasks.map((task) => 
+            task.id === taskId ? { ...task, done: true } : task
+    ));
+    }
+
+    // Derived views, recomputed from `tasks` on every render — not separate
+    // state, so they can never get out of sync with the source of truth.
+    const activeTasks = tasks.filter((task) => !task.done);
+    const doneTasks = tasks.filter((task) => task.done);
+
+
     return (
         <div>
             {error && <p>{error}</p>}
-            {tasks.map((task) => (
-                <TaskItem key={task.id} task={task} onDelete={removeTaskFromList} />
+
+            {activeTasks.map((task) => (
+                <TaskItem 
+                key={task.id} 
+                task={task} 
+                onDelete={removeTaskFromList} 
+                onMarkDone={markTaskAsDone}
+            />
+            ))}
+
+            <hr />
+
+            {doneTasks.map((task) => (
+                <TaskItem
+                    key={task.id}
+                    task={task}
+                    onDelete={removeTaskFromList}
+                    onMarkDone={markTaskAsDone}
+                />
             ))}
         </div>
     );
