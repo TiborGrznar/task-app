@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../api/axios";
 import type { Task } from "../types/Task";
 import TaskItem from "../components/TaskItem";
+import TaskForm from "../components/TaskForm";
 
 /**
  * Task list page. Loads the current user's tasks from the backend on mount
@@ -34,6 +35,18 @@ function TaskList() {
     }
 
 
+    /**  
+    * Passed to TaskForm as the onTaskCreated prop. Called with the newly
+    * created task (as returned by the backend, including its generated id)
+    * once creation succeeds. The spread operator (...tasks) copies the
+    * existing tasks into a new array with newTask appended, since React
+    * state must never be mutated directly (e.g. via tasks.push()).
+    */
+    function addTaskToList(newTask: Task) {
+        setTasks([...tasks, newTask]);
+    }
+
+
     /**  Passed to TaskItem as the onMarkDone prop. Called after the task has
     * already been marked done on the backend. Uses map (not filter) because
     * the task stays in the list, only its `done` property changes.
@@ -55,6 +68,8 @@ function TaskList() {
     return (
         <div>
             {error && <p>{error}</p>}
+
+            <TaskForm onTaskCreated={addTaskToList} />
 
             {activeTasks.map((task) => (
                 <TaskItem 
