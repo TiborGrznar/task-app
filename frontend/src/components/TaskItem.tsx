@@ -35,13 +35,31 @@ function TaskItem({ task, onDelete, onMarkDone }: TaskItemProps) {
 
 
     return (
-        <div>
-            <span>{task.done ? "✅" : "⬜"}</span>
-            <span>{task.text}</span>
-            {/* Only offer "mark done" for tasks that aren't done yet — 
-                un-marking is a deferred feature, not part of MVP */}
-            {!task.done && <button onClick={handleMarkDone}>Mark done</button>}
-            <button onClick={handleDelete}>Delete</button>
+        <div className="flex items-center justify-between gap-3 py-2 border-b border-gray-200">
+            <div className="flex items-center gap-2">
+                <span>{task.done ? "✅" : "⬜"}</span>
+                <span className={task.done ? "text-gray-400 line-through" : "text-gray-900"}>
+                    {task.text}
+                </span>
+            </div>
+            <div className="flex gap-2">
+                {/* Only offer "mark done" for tasks that aren't done yet — 
+                    un-marking is a deferred feature, not part of MVP */}
+                {!task.done && (
+                <button 
+                    onClick={handleMarkDone}
+                    className="text-sm px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                >
+                    Mark done
+                </button>
+                )}
+                <button 
+                    onClick={handleDelete}
+                    className="text-sm px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
+                >
+                    Delete
+                </button>
+            </div>
         </div>
     );
 }
