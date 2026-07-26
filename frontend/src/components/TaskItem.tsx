@@ -35,10 +35,9 @@ function TaskItem({ task, onDelete, onMarkDone }: TaskItemProps) {
 
 
     return (
-        <div className="flex items-center justify-between gap-3 py-2 border-b border-gray-200">
+        <div className="flex items-center justify-between gap-3 py-2">
             <div className="flex items-center gap-2">
-                <span>{task.done ? "✅" : "⬜"}</span>
-                <span className={task.done ? "text-gray-400 line-through" : "text-gray-900"}>
+                <span className={task.done ? "text-gray-400" : "text-gray-900"}>
                     {task.text}
                 </span>
             </div>
@@ -48,14 +47,14 @@ function TaskItem({ task, onDelete, onMarkDone }: TaskItemProps) {
                 {!task.done && (
                 <button 
                     onClick={handleMarkDone}
-                    className="text-sm px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors"
+                    className="text-sm px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors cursor-pointer"
                 >
                     Mark done
                 </button>
                 )}
                 <button 
                     onClick={handleDelete}
-                    className="text-sm px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors"
+                    className="text-sm px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors cursor-pointer"
                 >
                     Delete
                 </button>

@@ -66,30 +66,37 @@ function TaskList() {
 
 
     return (
-        <div>
-            {error && <p>{error}</p>}
+        <div className="min-h-screen bg-gray-50 py-10 px-4">
+            <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6">
 
-            <TaskForm onTaskCreated={addTaskToList} />
+                {error && <p className="text-red-600 text-2xl-sm mb-4">{error}</p>}
 
-            {activeTasks.map((task) => (
-                <TaskItem 
-                key={task.id} 
-                task={task} 
-                onDelete={removeTaskFromList} 
-                onMarkDone={markTaskAsDone}
-            />
-            ))}
+                <TaskForm onTaskCreated={addTaskToList} />
 
-            <hr />
+                <div>
+                    {activeTasks.map((task) => (
+                        <TaskItem 
+                        key={task.id} 
+                        task={task} 
+                        onDelete={removeTaskFromList} 
+                        onMarkDone={markTaskAsDone}
+                    />
+                    ))}
+                </div>
 
-            {doneTasks.map((task) => (
-                <TaskItem
-                    key={task.id}
-                    task={task}
-                    onDelete={removeTaskFromList}
-                    onMarkDone={markTaskAsDone}
-                />
-            ))}
+                <hr className="my-4 border-gray-200" />
+
+                <div>
+                    {doneTasks.map((task) => (
+                        <TaskItem
+                            key={task.id}
+                            task={task}
+                            onDelete={removeTaskFromList}
+                            onMarkDone={markTaskAsDone}
+                        />
+                    ))}
+                </div>
+            </div>
         </div>
     );
 }

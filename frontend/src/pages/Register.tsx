@@ -68,7 +68,7 @@ function Register() {
                 {error && <p className="text-red-600 text-sm">{error}</p>}
                 <button 
                     type="submit"
-                    className="w-full bg-blue-600 text-white py-2 rounded-md font-medium hover:bg-blue-700 transition-colors"
+                    className="w-full bg-blue-600 text-white py-2 rounded-md font-medium hover:bg-blue-700 transition-colors cursor-pointer"
                 >
                     Register
                 </button>

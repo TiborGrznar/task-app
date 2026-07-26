@@ -53,17 +53,17 @@ return (
                 value={password}
                 placeholder="Password"
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 cursor-pointer"
             />
             {error && <p className="text-red-600 text-sm">{error}</p>}
             <button
                 type="submit"
-                className="w-full bg-blue-600 text-white py-2 rounded-md font-medium hover:bg-blue-700 transition-colors"
+                className="w-full bg-blue-600 text-white py-2 rounded-md font-medium hover:bg-blue-700 transition-colors cursor-pointer"
             >
                 Login
             </button>
             <p className="text-sm text-gray-600 text-center">
-                Don't have an account? <Link to="/register" className="text-blue-600 hover:underline">Register</Link>
+                Don't have an account? <Link to="/register" className="text-blue-600 hover:underline cursor-pointer">Register</Link>
             </p>
         </form>
     </AuthLayout>
