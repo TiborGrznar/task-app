@@ -8,6 +8,6 @@ import lombok.Setter;
 @Setter
 public class TaskRequestDto {
 
-    @NotBlank
+    @NotBlank(message = "Task text cannot be empty")
     private String text;
 }

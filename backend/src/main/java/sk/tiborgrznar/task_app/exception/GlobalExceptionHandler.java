@@ -1,5 +1,6 @@
 package sk.tiborgrznar.task_app.exception;
 
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -42,7 +43,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<MessageResponseDto> handleValidation(MethodArgumentNotValidException exception) {
         String message = exception.getBindingResult().getFieldErrors().stream()
                 .findFirst()
-                .map(error -> error.getField() + ": " + error.getDefaultMessage())
+                .map(DefaultMessageSourceResolvable::getDefaultMessage)
                 .orElse("Validation error!");
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new MessageResponseDto(message));
