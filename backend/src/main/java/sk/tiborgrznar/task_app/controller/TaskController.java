@@ -38,6 +38,11 @@ public class TaskController {
         return ResponseEntity.ok(taskService.markDone(authentication.getName(), id));
     }
 
+    @PatchMapping("/{id}/undone")
+    public ResponseEntity<TaskResponseDto> unmarkDone(Authentication authentication, @PathVariable Long id) {
+        return ResponseEntity.ok(taskService.unmarkDone(authentication.getName(), id));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(Authentication authentication, @PathVariable Long id) {
         taskService.delete(authentication.getName(), id);
