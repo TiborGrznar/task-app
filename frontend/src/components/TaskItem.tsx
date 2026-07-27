@@ -5,6 +5,7 @@ interface TaskItemProps {
     task: Task;
     onDelete: (taskId: number) => void;
     onMarkDone: (taskId: number) => void;
+    onUnmarkDone: (taskId: number) => void;
 }
 
 /**
@@ -13,7 +14,7 @@ interface TaskItemProps {
  * and only after that succeeds is the parent notified via onDelete, so the
  * UI stays in sync with the database.
  */
-function TaskItem({ task, onDelete, onMarkDone }: TaskItemProps) {
+function TaskItem({ task, onDelete, onMarkDone, onUnmarkDone }: TaskItemProps) {
 
     async function handleDelete() {
             try {
@@ -30,6 +31,15 @@ function TaskItem({ task, onDelete, onMarkDone }: TaskItemProps) {
             onMarkDone(task.id);
         } catch (err) {
             console.error("Failed to mark task as done!",err);
+        }
+    }
+
+    async function handleUnmarkDone() {
+        try {
+            await api.patch(`/tasks/${task.id}/undone`);
+            onUnmarkDone(task.id);
+        } catch (err) {
+            console.error("Failed to unmark task as undone!", err)
         }
     }
 
@@ -51,6 +61,15 @@ function TaskItem({ task, onDelete, onMarkDone }: TaskItemProps) {
                 >
                     Mark done
                 </button>
+                )}
+                {task.done && (
+                    <button 
+                        onClick={handleUnmarkDone}
+                        className="text-sm px-3 py-1 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors cursor-pointer"
+                    >
+                        Unmark
+                    </button>
+                    
                 )}
                 <button 
                     onClick={handleDelete}

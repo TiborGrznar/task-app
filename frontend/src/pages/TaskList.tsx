@@ -59,6 +59,17 @@ function TaskList() {
     ));
     }
 
+    /** 
+    * Passed to TaskItem as the onMarkUndone prop. Called after a task has
+    * already been unmarked on the backend. Same immutable update pattern as
+    * markTaskAsDone, just setting `done` back to false instead of true.
+    */
+    function unmarkTaskAsDone(taskId: number) {
+        setTasks(tasks.map((task) => 
+            task.id === taskId ? { ...task, done: false } : task
+        ));
+    }
+
     // Derived views, recomputed from `tasks` on every render — not separate
     // state, so they can never get out of sync with the source of truth.
     const activeTasks = tasks.filter((task) => !task.done);
@@ -76,11 +87,12 @@ function TaskList() {
                 <div>
                     {activeTasks.map((task) => (
                         <TaskItem 
-                        key={task.id} 
-                        task={task} 
-                        onDelete={removeTaskFromList} 
-                        onMarkDone={markTaskAsDone}
-                    />
+                            key={task.id} 
+                            task={task} 
+                            onDelete={removeTaskFromList} 
+                            onMarkDone={markTaskAsDone}
+                            onUnmarkDone={unmarkTaskAsDone}
+                        />
                     ))}
                 </div>
 
@@ -93,6 +105,7 @@ function TaskList() {
                             task={task}
                             onDelete={removeTaskFromList}
                             onMarkDone={markTaskAsDone}
+                            onUnmarkDone={unmarkTaskAsDone}
                         />
                     ))}
                 </div>
