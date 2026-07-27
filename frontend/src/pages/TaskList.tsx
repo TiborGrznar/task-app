@@ -102,31 +102,33 @@ function TaskList() {
 
                 <TaskForm onTaskCreated={addTaskToList} />
 
-                <div>
-                    {activeTasks.map((task) => (
-                        <TaskItem 
-                            key={task.id} 
-                            task={task} 
-                            onDelete={removeTaskFromList} 
-                            onMarkDone={markTaskAsDone}
-                            onUnmarkDone={unmarkTaskAsDone}
-                        />
-                    ))}
-                </div>
+                {tasks.length === 0 ? (
+                    <p className="text-gray-500 text-center py-6">No tasks yet</p>
+                ) : (
+                    <>
+                        {activeTasks.map((task) => (
+                            <TaskItem 
+                                key={task.id} 
+                                task={task} 
+                                onDelete={removeTaskFromList} 
+                                onMarkDone={markTaskAsDone}
+                                onUnmarkDone={unmarkTaskAsDone}
+                            />
+                        ))}
+                    
+                    <hr className="my-4 border-gray-200" />
 
-                <hr className="my-4 border-gray-200" />
-
-                <div>
-                    {doneTasks.map((task) => (
-                        <TaskItem
-                            key={task.id}
-                            task={task}
-                            onDelete={removeTaskFromList}
-                            onMarkDone={markTaskAsDone}
-                            onUnmarkDone={unmarkTaskAsDone}
-                        />
-                    ))}
-                </div>
+                        {doneTasks.map((task) => (
+                            <TaskItem
+                                key={task.id}
+                                task={task}
+                                onDelete={removeTaskFromList}
+                                onMarkDone={markTaskAsDone}
+                                onUnmarkDone={unmarkTaskAsDone}
+                            />
+                        ))}
+                    </>
+                )}
             </div>
         </div>
     );
