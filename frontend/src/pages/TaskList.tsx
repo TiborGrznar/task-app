@@ -17,6 +17,7 @@ function TaskList() {
     const { logout } = useAuth();
     const [tasks, setTasks] = useState<Task[]>([]);
     const [error, setError] = useState("");
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         // Defined as a separate async function because the function passed
@@ -28,6 +29,8 @@ function TaskList() {
             } catch (err) {
                 console.error("Failed to load tasks!",err);
                 setError("Failed to load tasks!");
+            } finally {
+                setLoading(false);
             }
         }
         loadData();
@@ -102,7 +105,11 @@ function TaskList() {
 
                 <TaskForm onTaskCreated={addTaskToList} />
 
-                {tasks.length === 0 ? (
+                {loading ? (
+                    <div className="flex justify-center py-6">
+                        <div className="w-8 h-8 border-4 border-gray-200 border-t-blue-600 rounded-full animate-spin"></div>
+                    </div>
+                ) : tasks.length === 0 ? (
                     <p className="text-gray-500 text-center py-6">No tasks yet</p>
                 ) : (
                     <>
