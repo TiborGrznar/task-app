@@ -1,8 +1,11 @@
 import { useEffect, useState } from "react";
-import api from "../api/axios";
+import { useAuth } from "../context/useAuth";
+import { useNavigate } from "react-router-dom";
 import type { Task } from "../types/Task";
+import api from "../api/axios";
 import TaskItem from "../components/TaskItem";
 import TaskForm from "../components/TaskForm";
+
 
 /**
  * Task list page. Loads the current user's tasks from the backend on mount
@@ -10,6 +13,8 @@ import TaskForm from "../components/TaskForm";
  * by the axios instance's request interceptor).
  */
 function TaskList() {
+    const navigate = useNavigate();
+    const { logout } = useAuth();
     const [tasks, setTasks] = useState<Task[]>([]);
     const [error, setError] = useState("");
 
@@ -21,7 +26,7 @@ function TaskList() {
                 const response = await api.get("/tasks");
                 setTasks(response.data);
             } catch (err) {
-                console.error("Failed to load tasks!");
+                console.error("Failed to load tasks!",err);
                 setError("Failed to load tasks!");
             }
         }
@@ -71,6 +76,12 @@ function TaskList() {
         ));
     }
 
+    function handleLogout() {
+        logout();
+        navigate("/login");
+    } 
+    
+
     // Derived views, recomputed from `tasks` on every render — not separate
     // state, so they can never get out of sync with the source of truth.
     const activeTasks = tasks.filter((task) => !task.done);
@@ -79,6 +90,12 @@ function TaskList() {
 
     return (
         <div className="min-h-screen bg-gray-50 py-10 px-4">
+            <button
+                onClick={handleLogout}
+                className="absolute top-4 right-4 text-sm px-3 py-1 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors cursor-pointer"
+            >
+                Logout
+            </button>
             <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6">
 
                 {error && <p className="text-red-600 text-2xl-sm mb-4">{error}</p>}
