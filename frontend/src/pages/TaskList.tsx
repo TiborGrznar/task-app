@@ -21,7 +21,8 @@ function TaskList() {
                 const response = await api.get("/tasks");
                 setTasks(response.data);
             } catch (err) {
-                setError("Failed to load tasks!")
+                console.error("Failed to load tasks!");
+                setError("Failed to load tasks!");
             }
         }
         loadData();
