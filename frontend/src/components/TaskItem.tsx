@@ -46,35 +46,25 @@ function TaskItem({ task, onDelete, onMarkDone, onUnmarkDone }: TaskItemProps) {
 
     return (
         <div className="flex items-center justify-between gap-3 py-2">
-            <div className="flex items-center gap-2">
-                <span className={task.done ? "text-gray-400" : "text-gray-900"}>
-                    {task.text}
-                </span>
-            </div>
+            <span className={
+                task.done
+                    ? "bg-neutral-900 border border-neutral-700 text-neutral-500 rounded-full px-5 py-2 line-through"
+                    : "bg-neutral-900 border border-neutral-700 text-white rounded-full px-5 py-2"
+            }>
+                {task.text}
+            </span>
             <div className="flex gap-2">
-                {/* Only offer "mark done" for tasks that aren't done yet — 
-                    un-marking is a deferred feature, not part of MVP */}
                 {!task.done && (
-                <button 
-                    onClick={handleMarkDone}
-                    className="text-sm px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors cursor-pointer"
-                >
-                    Mark done
-                </button>
+                    <button onClick={handleMarkDone} className="text-sm px-3 py-1 bg-emerald-600 text-white font-medium rounded-md hover:bg-emerald-700 transition-colors cursor-pointer">
+                        Mark done
+                    </button>
                 )}
                 {task.done && (
-                    <button 
-                        onClick={handleUnmarkDone}
-                        className="text-sm px-3 py-1 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors cursor-pointer"
-                    >
+                    <button onClick={handleUnmarkDone} className="text-sm px-3 py-1 bg-neutral-700 text-white font-medium rounded-md hover:bg-neutral-600 transition-colors cursor-pointer">
                         Unmark
                     </button>
-                    
                 )}
-                <button 
-                    onClick={handleDelete}
-                    className="text-sm px-3 py-1 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors cursor-pointer"
-                >
+                <button onClick={handleDelete} className="text-sm px-3 py-1 text-neutral-400 hover:text-red-400 font-medium transition-colors cursor-pointer">
                     Delete
                 </button>
             </div>

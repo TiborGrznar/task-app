@@ -92,47 +92,32 @@ function TaskList() {
 
 
     return (
-        <div className="min-h-screen bg-gray-50 py-10 px-4">
-            <button
-                onClick={handleLogout}
-                className="absolute top-4 right-4 text-sm px-3 py-1 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition-colors cursor-pointer"
-            >
+        <div className="min-h-screen bg-neutral-900 py-10 px-4 relative">
+            <button onClick={handleLogout} className="absolute top-4 right-4 text-sm px-3 py-1 bg-neutral-700 text-white font-medium rounded-md hover:bg-neutral-600 transition-colors cursor-pointer">
                 Logout
             </button>
-            <div className="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-6">
 
-                {error && <p className="text-red-600 text-2xl-sm mb-4">{error}</p>}
+            <div className="max-w-2xl mx-auto bg-neutral-800 border border-neutral-700 rounded-lg shadow-md p-6">
+                <h1 className="text-2xl font-semibold text-white mb-4">My Tasks</h1>
+
+                {error && <p className="text-red-400 text-sm mb-4">{error}</p>}
 
                 <TaskForm onTaskCreated={addTaskToList} />
 
                 {loading ? (
                     <div className="flex justify-center py-6">
-                        <div className="w-8 h-8 border-4 border-gray-200 border-t-blue-600 rounded-full animate-spin"></div>
+                        <div className="w-8 h-8 border-4 border-neutral-700 border-t-emerald-500 rounded-full animate-spin"></div>
                     </div>
                 ) : tasks.length === 0 ? (
-                    <p className="text-gray-500 text-center py-6">No tasks yet</p>
+                    <p className="text-neutral-400 text-center py-6">No tasks yet — add one above!</p>
                 ) : (
                     <>
                         {activeTasks.map((task) => (
-                            <TaskItem 
-                                key={task.id} 
-                                task={task} 
-                                onDelete={removeTaskFromList} 
-                                onMarkDone={markTaskAsDone}
-                                onUnmarkDone={unmarkTaskAsDone}
-                            />
+                            <TaskItem key={task.id} task={task} onDelete={removeTaskFromList} onMarkDone={markTaskAsDone} onUnmarkDone={unmarkTaskAsDone} />
                         ))}
-                    
-                    <hr className="my-4 border-gray-200" />
-
+                        <hr className="my-4 border-neutral-700" />
                         {doneTasks.map((task) => (
-                            <TaskItem
-                                key={task.id}
-                                task={task}
-                                onDelete={removeTaskFromList}
-                                onMarkDone={markTaskAsDone}
-                                onUnmarkDone={unmarkTaskAsDone}
-                            />
+                            <TaskItem key={task.id} task={task} onDelete={removeTaskFromList} onMarkDone={markTaskAsDone} onUnmarkDone={unmarkTaskAsDone} />
                         ))}
                     </>
                 )}
