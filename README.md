@@ -17,6 +17,9 @@ A full-stack task management application built as a learning project. Users can 
 - Axios
 - Tailwind CSS v4
 
+**Infrastructure**
+- Docker & Docker Compose (backend, frontend, MySQL, phpMyAdmin)
+
 ## Features
 
 - User registration and login (JWT-based authentication)
@@ -28,9 +31,34 @@ A full-stack task management application built as a learning project. Users can 
 
 ```
 task-app/
-├── backend/    # Spring Boot API
-└── frontend/   # React + TypeScript client
+├── backend/ # Spring Boot API
+├── frontend/ # React + TypeScript client
+└── docker-compose.yml
 ```
+
+## Run with Docker (recommended)
+
+The whole stack (MySQL, phpMyAdmin, backend, frontend) runs with one command.
+
+1. Copy `.env.example` to `.env` in the repo root and fill in real values:
+
+```bash
+cp .env.example .env
+```
+
+2. Start everything:
+
+```bash
+docker compose up -d --build
+```
+
+- Frontend: http://localhost:5173
+- Backend API: http://localhost:8081
+- phpMyAdmin: http://localhost:8082
+
+Stop with docker compose down (add -v to also wipe the database volume).
+
+## Manual setup (without Docker)
 
 ## Prerequisites
 
@@ -38,11 +66,8 @@ task-app/
 - Node.js 18+
 - MySQL (a Docker setup is recommended, see below)
 
-## Getting started
 
 ### 1. Database
-
-Run MySQL in Docker (example):
 
 ```bash
 docker run --name taskapp-mysql -e MYSQL_ROOT_PASSWORD=<your-password> -p 3307:3306 -v taskapp_mysql_data:/var/lib/mysql -d mysql:8.0
@@ -65,7 +90,8 @@ jwt.secret=<your-jwt-secret>
 
 ```bash
 cd backend
-./mvnw spring-boot:run -Dspring-boot.run.arguments=--spring.profiles.active=local
+./mvnw spring-boot:run -Dspring-boot.run.arguments=--
+spring.profiles.active=local
 ```
 
 The API runs on `http://localhost:8081`.
@@ -82,14 +108,15 @@ The app runs on `http://localhost:5173`.
 
 ## API overview
 
-| Method | Endpoint                | Description              | Auth required |
-|--------|--------------------------|---------------------------|----------------|
-| POST   | `/api/auth/register`     | Register a new user       | No             |
-| POST   | `/api/auth/login`        | Log in, returns a JWT     | No             |
-| GET    | `/api/tasks`              | List the current user's tasks | Yes        |
-| POST   | `/api/tasks`              | Create a new task         | Yes             |
-| PATCH  | `/api/tasks/{id}/done`   | Mark a task as done       | Yes             |
-| DELETE | `/api/tasks/{id}`         | Delete a task             | Yes             |
+| Method | Endpoint                 | Description                   | Auth required  |
+|--------|--------------------------|-------------------------------|----------------|
+| POST   | `/api/auth/register`     | Register a new user           | No             |
+| POST   | `/api/auth/login`        | Log in, returns a JWT         | No             |
+| GET    | `/api/tasks`             | List the current user's tasks | Yes            |
+| POST   | `/api/tasks`             | Create a new task             | Yes            |
+| PATCH  | `/api/tasks/{id}/done`   | Mark a task as done           | Yes            |
+| PATCH  | `/api/tasks/{id}/undone` | Mark a task as not done       | Yes            |
+| DELETE | `/api/tasks/{id}`        | Delete a task                 | Yes            |
 
 Authenticated requests must include an `Authorization: Bearer <token>` header.
 
@@ -97,3 +124,4 @@ Authenticated requests must include an `Authorization: Bearer <token>` header.
 
 - Passwords are hashed with BCrypt; they cannot be recovered, only reset.
 - The frontend stores the JWT in `localStorage` and attaches it automatically to API requests via an Axios interceptor.
+- Two separate `.env` files exist: one in the repo root (Docker Compose secrets: MySQL password, JWT secret) and one in `frontend/` (`VITE_API_URL`). Neither is committed; see the corresponding `.env.example` files.
