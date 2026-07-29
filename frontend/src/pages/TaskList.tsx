@@ -14,7 +14,7 @@ import TaskForm from "../components/TaskForm";
  */
 function TaskList() {
     const navigate = useNavigate();
-    const { logout } = useAuth();
+    const { logout, name } = useAuth();
     const [tasks, setTasks] = useState<Task[]>([]);
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(true);
@@ -93,9 +93,12 @@ function TaskList() {
 
     return (
         <div className="min-h-screen bg-neutral-900 py-10 px-4 relative">
-            <button onClick={handleLogout} className="absolute top-4 right-4 text-sm px-3 py-1 bg-neutral-700 text-white font-medium rounded-md hover:bg-neutral-600 transition-colors cursor-pointer">
-                Logout
-            </button>
+            <div className="absolute top-4 right-4 flex items-center gap-3">
+                <span className="text-sm text-neutral-300">{name}</span>
+                <button onClick={handleLogout} className="text-sm px-3 py-1 bg-neutral-700 text-white font-medium rounded-md hover:bg-neutral-600 transition-colors cursor-pointer">
+                    Logout
+                </button>
+            </div>
 
             <div className="max-w-2xl mx-auto bg-neutral-800 border border-neutral-700 rounded-lg shadow-md p-6">
                 <h1 className="text-2xl font-semibold text-white mb-4">My Tasks</h1>

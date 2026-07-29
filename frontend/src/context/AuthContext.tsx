@@ -12,6 +12,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     // Initialize from localStorage so a page refresh doesn't log the user out
     const [token, setToken] = useState<string | null>(localStorage.getItem("token"));
     const [email, setEmail] = useState<string | null>(localStorage.getItem("email"));
+    const [name, setName] = useState<string | null>(localStorage.getItem("name"));
 
     // Authenticates against the backend and persists the token/email so the
     // user stays logged in across page reloads
@@ -20,9 +21,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         setToken(res.data.token);
         setEmail(res.data.email);
+        setName(res.data.name);
 
         localStorage.setItem("token", res.data.token);
         localStorage.setItem("email", res.data.email);
+        localStorage.setItem("name", res.data.name);
     };
 
     // Just creates the account — doesn't log the user in automatically
@@ -33,13 +36,15 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const logout = () => {
         setToken(null);
         setEmail(null);
+        setName(null);
 
         localStorage.removeItem("token");
         localStorage.removeItem("email");
+        localStorage.removeItem("name");
     };
 
     return (
-        <AuthContext.Provider value={{ token, email, login, register, logout, }}>
+        <AuthContext.Provider value={{ token, email, name, login, register, logout, }}>
             {children}
         </AuthContext.Provider>
     );
