@@ -6,7 +6,7 @@ import axios from "axios";
  * components never have to do it manually.
  */
 const api = axios.create({
-    baseURL: "http://localhost:8081/api",
+    baseURL: import.meta.env.VITE_API_URL || "http://localhost:8081/api",
 });
 
 api.interceptors.request.use((config) => {
