@@ -46,14 +46,14 @@ function Login() {
                     value={email}
                     placeholder="Email"
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)}
-                    className="w-full px-3 py-2 bg-neutral-900 text-white border border-neutral-700 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 placeholder:text-neutral-500"
+                    className="w-full px-3 py-2 bg-neutral-900 text-white border border-neutral-700 rounded-md focus:outline-none focus:ring-1 focus:ring-emerald-500 placeholder:text-neutral-500"
                 />
                 <input
                     type="password"
                     value={password}
                     placeholder="Password"
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.target.value)}
-                    className="w-full px-3 py-2 bg-neutral-900 text-white border border-neutral-700 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 placeholder:text-neutral-500"
+                    className="w-full px-3 py-2 bg-neutral-900 text-white border border-neutral-700 rounded-md focus:outline-none focus:ring-1 focus:ring-emerald-500 placeholder:text-neutral-500"
                 />
                 {error && <p className="text-red-400 text-sm">{error}</p>}
                 <button type="submit" className="w-full bg-emerald-600 text-white py-2 rounded-md font-medium hover:bg-emerald-700 transition-colors cursor-pointer">

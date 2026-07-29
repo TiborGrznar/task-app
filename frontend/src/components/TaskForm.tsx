@@ -44,7 +44,7 @@ function TaskForm({ onTaskCreated }: TaskFormProps) {
                     type="text"
                     value={text}
                     onChange={(event: React.ChangeEvent<HTMLInputElement>) => setText(event.target.value)}
-                    className="flex-1 px-3 py-2 bg-neutral-900 text-white border border-neutral-700 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500 placeholder:text-neutral-500"
+                    className="flex-1 px-3 py-2 bg-neutral-900 text-white border border-neutral-700 rounded-md focus:outline-none focus:ring-1 focus:ring-emerald-500 placeholder:text-neutral-500"
                 />
                 <button type="submit" className="bg-emerald-600 text-white px-4 py-2 rounded-md font-medium hover:bg-emerald-700 transition-colors cursor-pointer">
                     Add task
