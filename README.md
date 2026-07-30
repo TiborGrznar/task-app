@@ -1,4 +1,5 @@
 # Task App
+![CI](https://github.com/TiborGrznar/task-app/actions/workflows/ci.yml/badge.svg)
 
 A full-stack task management application built as a learning project. Users can register, log in, create tasks, mark them as done, and delete them.
 
@@ -105,6 +106,17 @@ npm run dev
 ```
 
 The app runs on `http://localhost:5173`.
+
+## Testing
+
+The backend has a unit test suite (JUnit 5 + Mockito) covering `AuthService` and `TaskService`.
+
+```bash
+cd backend
+./mvnw test
+```
+
+Tests run automatically on every push and pull request via GitHub Actions (see `.github/workflows/ci.yml`), alongside a frontend build check.
 
 ## API overview
 
